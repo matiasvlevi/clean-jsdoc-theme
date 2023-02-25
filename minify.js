@@ -32,8 +32,8 @@ const uglifyFiles = [
 
 const cssFilePaths = [
     path.join(cssPath, 'clean-jsdoc-theme-base.css'),
-    path.join(cssPath, 'clean-jsdoc-theme-dark.css'),
-    path.join(cssPath, 'clean-jsdoc-theme-light.css')
+    path.join(cssPath, 'clean-jsdoc-theme-light.css'),
+    path.join(cssPath, 'clean-jsdoc-theme-dark.css')
 ];
 
 let css = '';
