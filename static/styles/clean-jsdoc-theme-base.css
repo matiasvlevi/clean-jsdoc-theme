@@ -208,7 +208,8 @@ dt {
 }
 
 .method-container {
-    margin-bottom: 4rem;
+    margin-bottom: 5rem;
+    padding-bottom: 3rem;
 }
 
 .method-member-container table {
