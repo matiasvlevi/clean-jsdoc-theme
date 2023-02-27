@@ -461,7 +461,7 @@ function getName(item) {
 function buildSearchListForData() {
     data().each((item) => {
         if (item.kind !== 'package' && !item.inherited) {
-            console.log(item.mixes)
+            
             if(defaultConfig.MIXIN_EXTEND && item.mixes && item.kind !== 'module') {
                 if (item.mixes.length !== 0) {
                     item.memberof = 'module:' + item.mixes[0];
