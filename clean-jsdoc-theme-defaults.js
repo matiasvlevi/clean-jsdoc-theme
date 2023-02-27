@@ -32,8 +32,12 @@ const HTML_MINIFY_OPTIONS = {
 
 const defaultConfig = {
     MIXIN_EXTEND: true,
+    nameConversion: {
+        'inner': (item) => item.memberof.split(':')[1] + '.prototype.' + item.name,
+        'static': (item) => item.memberof.split(':')[1] + '.' + item.name,
+        'case_default': (item) => item.name
+    }    
 };
-
 
 module.exports = {
     HTML_MINIFY_OPTIONS,

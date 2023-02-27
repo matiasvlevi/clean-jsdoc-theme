@@ -450,23 +450,11 @@ function buildSidebarMembers({
     return navProps;
 }
 
-const name_conversion = {
-    'inner': (item) => {
-        return item.memberof.split(':')[1] + '.prototype.' + item.name
-    },
-    'static': (item) => {
-        return item.memberof.split(':')[1] + '.' + item.name
-    },
-    'case_default': (item) => {
-        return item.name
-    }
-}
-
 function getName(item) {
-    if (item.scope in name_conversion) 
-        return (name_conversion[item.scope])(item);
+    if (item.scope in defaultConfig.nameConversion) 
+        return (defaultConfig.nameConversion[item.scope])(item);
     else    
-        return name_conversion['case_default'](item);
+        return defaultConfig.nameConversion.case_default(item);
 
 }
 

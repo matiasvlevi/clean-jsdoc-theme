@@ -76,6 +76,7 @@ async function fetchAllData() {
   const url = new URL('data/search.json', base);
   const result = await fetch(url);
   const { list } = await result.json();
+
   return list;
 }
 
@@ -144,6 +145,7 @@ function getSearchResult(list, keys, searchKey) {
   const fuse = new Fuse(list, options, searchIndex);
 
   const result = fuse.search(searchKey);
+
   if (result.length > 20) {
     return result.slice(0, 20);
   }
