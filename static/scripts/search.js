@@ -137,7 +137,6 @@ function getSearchResult(list, keys, searchKey) {
   };
 
   const options = { ...defaultOptions };
-  console.log(list)
   // eslint-disable-next-line no-undef
   const searchIndex = Fuse.createIndex(options.keys, list);
 
@@ -145,7 +144,6 @@ function getSearchResult(list, keys, searchKey) {
   const fuse = new Fuse(list, options, searchIndex);
 
   const result = fuse.search(searchKey);
-  console.log(result)
   if (result.length > 20) {
     return result.slice(0, 20);
   }
@@ -180,8 +178,6 @@ let searchData;
 async function search(event) {
   const value = event.target.value;
   const keys = ['title', 'description', 'summary'];
-
-  console.log(keys);
 
   if (!resultBox) {
     console.error('Search result container not found');
