@@ -76,7 +76,6 @@ async function fetchAllData() {
   const url = new URL('data/search.json', base);
   const result = await fetch(url);
   const { list } = await result.json();
-
   return list;
 }
 
@@ -108,16 +107,17 @@ function buildSearchResult(result) {
   const removeHTMLTagsRegExp = /(<([^>]+)>)/ig;
   
   for (const res of result) {
-    const { title = '', description = '' } = res.item;
+    const { title = '', description = '', summary = '' } = res.item;
 
     const _link = res.item.link.replace('<a href="', '').replace(/">.*/, '');
     const _title = title.replace(removeHTMLTagsRegExp, "");
     const _description = description.replace(removeHTMLTagsRegExp, "");
+    const _summary = summary.replace(removeHTMLTagsRegExp, "");
 
     output += `
     <a onclick="onClickSearchItem(event)" href="${_link}" class="search-result-item">
       <div class="search-result-item-title">${_title}</div>
-      <div class="search-result-item-p">${_description || 'No description available.'}</div>
+      <div class="search-result-item-p">${_description || _summary || 'No description or summary available.'}</div>
     </a>
     `;
   }
@@ -137,7 +137,7 @@ function getSearchResult(list, keys, searchKey) {
   };
 
   const options = { ...defaultOptions };
-
+  console.log(list)
   // eslint-disable-next-line no-undef
   const searchIndex = Fuse.createIndex(options.keys, list);
 
@@ -145,7 +145,7 @@ function getSearchResult(list, keys, searchKey) {
   const fuse = new Fuse(list, options, searchIndex);
 
   const result = fuse.search(searchKey);
-
+  console.log(result)
   if (result.length > 20) {
     return result.slice(0, 20);
   }
@@ -179,7 +179,9 @@ let searchData;
 
 async function search(event) {
   const value = event.target.value;
-  const keys = ['title', 'description'];
+  const keys = ['title', 'description', 'summary'];
+
+  console.log(keys);
 
   if (!resultBox) {
     console.error('Search result container not found');
@@ -195,7 +197,6 @@ async function search(event) {
 
   if (!searchData) {
     showResultText('Loading...');
-
     try {
       // eslint-disable-next-line require-atomic-updates
       searchData = await fetchAllData();

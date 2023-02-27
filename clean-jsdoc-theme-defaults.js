@@ -30,8 +30,14 @@ const HTML_MINIFY_OPTIONS = {
     minifyCSS: true,
 };
 
+const defaultConfig = {
+    MIXIN_EXTEND: true,
+};
+
+
 module.exports = {
     HTML_MINIFY_OPTIONS,
     SECTION_TYPE,
-    defaultSections
+    defaultSections,
+    defaultConfig
 }

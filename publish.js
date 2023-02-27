@@ -33,6 +33,7 @@ const {
     HTML_MINIFY_OPTIONS,
     SECTION_TYPE,
     defaultSections,
+    defaultConfig
 } = require('./clean-jsdoc-theme-defaults');
 
 const htmlsafe = helper.htmlsafe;
@@ -449,13 +450,41 @@ function buildSidebarMembers({
     return navProps;
 }
 
+const name_conversion = {
+    'inner': (item) => {
+        return item.memberof.split(':')[1] + '.prototype.' + item.name
+    },
+    'static': (item) => {
+        return item.memberof.split(':')[1] + '.' + item.name
+    },
+    'case_default': (item) => {
+        return item.name
+    }
+}
+
+function getName(item) {
+    if (item.scope in name_conversion) 
+        return (name_conversion[item.scope])(item);
+    else    
+        return name_conversion['case_default'](item);
+
+}
+
 function buildSearchListForData() {
     data().each((item) => {
         if (item.kind !== 'package' && !item.inherited) {
+            console.log(item.mixes)
+            if(defaultConfig.MIXIN_EXTEND && item.mixes && item.kind !== 'module') {
+                if (item.mixes.length !== 0) {
+                    item.memberof = 'module:' + item.mixes[0];
+                }
+            }
+
             searchList.push({
-                title: item.longname,
+                title: getName(item),
                 link: linkto(item.longname, item.name),
-                description: item.description
+                description: item.description,
+                summary: item.summary
             })
         }
     });
